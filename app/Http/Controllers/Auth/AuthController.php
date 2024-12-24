@@ -15,6 +15,7 @@ class AuthController extends Controller
         if ($request->validated()) {
             User::create([
                 'name' => $request->name,
+                'surname' => $request->surname,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
             ]);
