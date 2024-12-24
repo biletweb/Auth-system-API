@@ -31,7 +31,7 @@ class AuthController extends Controller
             if (auth()->attempt($request->only('email', 'password'))) {
                 return response()->json([
                     'message' => 'You have successfully logged in.',
-                    'user' => auth()->user()->only('id', 'name', 'email'),
+                    'user' => auth()->user()->only('id', 'name', 'email', 'role'),
                     'access_token' => auth()->user()->createToken('authToken')->plainTextToken,
                 ]);
             } else {
