@@ -39,14 +39,18 @@ class ProfileController extends Controller
     public function updatePersonalInfo(UpdatePersonalInfoRequest $request)
     {
         if ($request->validated()) {
-            if ($request->name === $request->user()->name) {
-                return response()->json([
-                    'error' => 'Name cannot be the same.',
+            if ($request->name !== $request->user()->name || $request->surname !== $request->user()->surname) {
+                $request->user()->update([
+                    'name' => $request->name,
+                    'surname' => $request->surname,
                 ]);
-            }
-            if ($request->surname === $request->user()->surname) {
+
                 return response()->json([
-                    'error' => 'Surname cannot be the same.',
+                    'message' => 'Personal information updated successfully.',
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No changes were made.',
                 ]);
             }
         }
