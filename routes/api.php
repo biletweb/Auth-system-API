@@ -27,4 +27,4 @@ Route::post('/profile/settings/confirm-email', function (Request $request) {
     ]);
 
     return response()->json(['message' => 'You have successfully verified your email.']);
-})->middleware('auth:sanctum')->name('verification.verify');
+})->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.verify');
