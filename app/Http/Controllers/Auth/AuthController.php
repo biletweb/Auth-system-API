@@ -24,7 +24,7 @@ class AuthController extends Controller
             event(new Registered($user));
 
             return response()->json([
-                'message' => 'Account has been created successfully! Please confirm your email. We have sent a confirmation email to the address you provided.',
+                'message' => 'Account has been created successfully! Please confirm your email. We have sent a security code to the address you provided.',
             ]);
         }
     }
