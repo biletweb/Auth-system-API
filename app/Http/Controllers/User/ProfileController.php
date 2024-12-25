@@ -11,7 +11,7 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'user' => $request->user()->only('id', 'name', 'email', 'role'),
+            'user' => $request->user()->only('id', 'name', 'surname', 'email', 'role'),
             'access_token' => $request->bearerToken(),
         ]);
     }
