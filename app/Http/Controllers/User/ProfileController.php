@@ -58,6 +58,12 @@ class ProfileController extends Controller
 
     public function deleteAccount(Request $request)
     {
+        if ($request->user()->role === 'admin') {
+            return response()->json([
+                'error' => 'It is not possible to delete an account with the administrator role. Please change your role before deleting.',
+            ]);
+        }
+
         $request->user()->currentAccessToken()->delete();
         $request->user()->delete();
 
