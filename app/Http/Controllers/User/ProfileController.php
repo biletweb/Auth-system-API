@@ -55,4 +55,14 @@ class ProfileController extends Controller
             }
         }
     }
+
+    public function deleteAccount(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        $request->user()->delete();
+
+        return response()->json([
+            'message' => 'Account deleted successfully.',
+        ]);
+    }
 }
