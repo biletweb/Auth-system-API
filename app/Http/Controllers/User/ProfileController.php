@@ -60,7 +60,7 @@ class ProfileController extends Controller
     {
         if ($request->user()->role === 'admin') {
             return response()->json([
-                'error' => 'It is not possible to delete an account with the administrator role. Please change your role before deleting.',
+                'warning' => 'It is not possible to delete an account with the administrator role. Please change your role before deleting.',
             ]);
         }
 
