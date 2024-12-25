@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -13,15 +14,17 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         if ($request->validated()) {
-            User::create([
+            $user = User::create([
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
             ]);
 
+            event(new Registered($user));
+
             return response()->json([
-                'message' => 'Account has been created successfully.',
+                'message' => 'Account has been created successfully! Please confirm your email. We have sent a confirmation email to the address you provided.',
             ]);
         }
     }
