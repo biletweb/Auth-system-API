@@ -15,22 +15,29 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register'])->name('verification.verify');
 
 
-// Route::get('/email/verify/{id}/{hash}', function (Request $request) {
-//     $user = User::find($request->route('id'));
-//     if ($user->hasVerifiedEmail()) {
-//         return response()->json(['message' => 'You have already verified your email.']);
-//     }
-//     $user->markEmailAsVerified();
-//     return response()->json(['message' => 'You have successfully verified your email.']);
-// })->name('verification.verify');
+Route::post('/profile/settings/confirm-email', function (Request $request) {
+    if ($request->user()->hasVerifiedEmail()) {
+        return response()->json(['warning' => 'You have already verified your email.']);
+    }
+    if ($request->securityCode !== $request->user()->security_code) {
+        return response()->json(['error' => 'Invalid security code.']);
+    }
+    
+    $request->user()->markEmailAsVerified();
+    $request->user()->update([
+        'security_code' => null,
+    ]);
+
+    return response()->json(['message' => 'You have successfully verified your email.']);
+})->middleware('auth:sanctum')->name('verification.verify');
 
 // Route::get('/email/verify', function () {
 //     return view('auth.verify-email');
 // })->middleware('auth')->name('verification.notice');
 // use Illuminate\Http\Request;
- 
+
 // Route::post('/email/verification-notification', function (Request $request) {
 //     $request->user()->sendEmailVerificationNotification();
- 
+
 //     return back()->with('message', 'Verification link sent!');
 // })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
