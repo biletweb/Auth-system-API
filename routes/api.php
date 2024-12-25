@@ -12,17 +12,17 @@ Route::post('/profile/settings/update-personal-info', [ProfileController::class,
 Route::post('/profile/settings/delete-account', [ProfileController::class, 'deleteAccount'])->middleware('auth:sanctum');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->name('verification.verify');
 
 
-Route::get('/email/verify/{id}/{hash}', function (Request $request) {
-    $user = User::find($request->route('id'));
-    if ($user->hasVerifiedEmail()) {
-        return response()->json(['message' => 'You have already verified your email.']);
-    }
-    $user->markEmailAsVerified();
-    return response()->json(['message' => 'You have successfully verified your email.']);
-})->name('verification.verify');
+// Route::get('/email/verify/{id}/{hash}', function (Request $request) {
+//     $user = User::find($request->route('id'));
+//     if ($user->hasVerifiedEmail()) {
+//         return response()->json(['message' => 'You have already verified your email.']);
+//     }
+//     $user->markEmailAsVerified();
+//     return response()->json(['message' => 'You have successfully verified your email.']);
+// })->name('verification.verify');
 
 // Route::get('/email/verify', function () {
 //     return view('auth.verify-email');
