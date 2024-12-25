@@ -50,7 +50,7 @@ class ProfileController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'error' => 'No changes were made.',
+                    'warning' => 'No changes were made.',
                 ]);
             }
         }
