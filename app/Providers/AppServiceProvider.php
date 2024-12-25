@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Models\User;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,9 +19,10 @@ class AppServiceProvider extends ServiceProvider
             $user = User::find($notifiable->id);
             $user->security_code = $securityCode;
             $user->save();
+
             return (new MailMessage)
                 ->subject('Verify Email Address')
-                ->view('emails.verify-email', ['name' => $notifiable->name, 'securityCode' => $securityCode,]);
+                ->view('emails.verify-email', ['name' => $notifiable->name, 'securityCode' => $securityCode]);
         });
     }
 
