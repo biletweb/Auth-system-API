@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\NewPasswordRequest;
+use App\Http\Requests\User\UpdatePersonalInfoRequest;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -32,6 +33,22 @@ class ProfileController extends Controller
             return response()->json([
                 'message' => 'Password changed successfully.',
             ]);
+        }
+    }
+
+    public function updatePersonalInfo(UpdatePersonalInfoRequest $request)
+    {
+        if ($request->validated()) {
+            if ($request->name === $request->user()->name) {
+                return response()->json([
+                    'error' => 'Name cannot be the same.',
+                ]);
+            }
+            if ($request->surname === $request->user()->surname) {
+                return response()->json([
+                    'error' => 'Surname cannot be the same.',
+                ]);
+            }
         }
     }
 }
