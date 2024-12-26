@@ -54,4 +54,21 @@ class AuthController extends Controller
             'message' => 'You have successfully logged out.',
         ]);
     }
+
+    public function confirmEmail(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return response()->json(['warning' => 'You have already verified your email.']);
+        }
+        if ($request->securityCode !== $request->user()->security_code) {
+            return response()->json(['error' => 'Invalid security code.']);
+        }
+
+        $request->user()->markEmailAsVerified();
+        $request->user()->update([
+            'security_code' => null,
+        ]);
+
+        return response()->json(['message' => 'You have successfully verified your email.']);
+    }
 }
