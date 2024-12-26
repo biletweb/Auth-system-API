@@ -38,21 +38,19 @@ class ProfileController extends Controller
 
     public function updatePersonalInfo(UpdatePersonalInfoRequest $request)
     {
-        if ($request->validated()) {
-            if ($request->name !== $request->user()->name || $request->surname !== $request->user()->surname) {
-                $request->user()->update([
-                    'name' => $request->name,
-                    'surname' => $request->surname,
-                ]);
+        if ($request->name !== $request->user()->name || $request->surname !== $request->user()->surname) {
+            $request->user()->update([
+                'name' => $request->name,
+                'surname' => $request->surname,
+            ]);
 
-                return response()->json([
-                    'message' => 'Personal information updated successfully.',
-                ]);
-            } else {
-                return response()->json([
-                    'warning' => 'No changes were made.',
-                ]);
-            }
+            return response()->json([
+                'message' => 'Personal information updated successfully.',
+            ]);
+        } else {
+            return response()->json([
+                'warning' => 'No changes were made.',
+            ]);
         }
     }
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\User;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class UpdatePersonalInfoRequest extends FormRequest
 {
@@ -25,5 +27,28 @@ class UpdatePersonalInfoRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        if ($errors->has('name')) {
+            $response = response()->json([
+                'field' => 'name',
+                'error' => $errors->first('name'),
+            ], 422);
+
+            throw new ValidationException($validator, $response);
+        }
+
+        if ($errors->has('surname')) {
+            $response = response()->json([
+                'field' => 'surname',
+                'error' => $errors->first('surname'),
+            ], 422);
+
+            throw new ValidationException($validator, $response);
+        }
     }
 }
