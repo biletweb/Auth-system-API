@@ -39,8 +39,9 @@ class AuthController extends Controller
             ]);
         } else {
             return response()->json([
+                'field' => 'email, password',
                 'error' => 'Invalid credentials.',
-            ]);
+            ], 422);
         }
     }
 
