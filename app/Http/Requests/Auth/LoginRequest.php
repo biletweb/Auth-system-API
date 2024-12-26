@@ -43,7 +43,6 @@ class LoginRequest extends FormRequest
 
         if ($errors->has('password')) {
             $response = response()->json([
-                'field' => 'password',
                 'error' => $errors->first('password'),
             ], 422);
 
