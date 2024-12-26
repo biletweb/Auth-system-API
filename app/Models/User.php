@@ -52,6 +52,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getEmailVerifiedAtAttribute($value)
     {
+        if ($value === null) {
+            return null;
+        }
+
         return $value !== null;
     }
 
