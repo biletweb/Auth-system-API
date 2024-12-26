@@ -60,13 +60,13 @@ class AuthController extends Controller
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json(['warning' => 'You have already verified your email.']);
         }
-        if ($request->securityCode !== $request->user()->security_code) {
-            return response()->json(['error' => 'Invalid security code.']);
+        if ($request->verificationCode !== $request->user()->verificationCode) {
+            return response()->json(['error' => 'Invalid verification code.']);
         }
 
         $request->user()->markEmailAsVerified();
         $request->user()->update([
-            'security_code' => null,
+            'verification_code' => null,
         ]);
 
         return response()->json(['message' => 'You have successfully verified your email.']);
@@ -76,6 +76,6 @@ class AuthController extends Controller
     {
         $request->user()->sendEmailVerificationNotification();
 
-        return response()->json(['message' => 'Security code has been sent.']);
+        return response()->json(['message' => 'Verification code has been sent.']);
     }
 }

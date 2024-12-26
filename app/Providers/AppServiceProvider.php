@@ -15,14 +15,14 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         VerifyEmail::toMailUsing(function (object $notifiable) {
-            $securityCode = random_int(100000, 999999);
+            $verificationCode = random_int(100000, 999999);
             $user = User::find($notifiable->id);
-            $user->security_code = $securityCode;
+            $user->verification_code = $verificationCode;
             $user->save();
 
             return (new MailMessage)
                 ->subject('Verify Email Address')
-                ->view('emails.verify-email', ['name' => $notifiable->name, 'securityCode' => $securityCode]);
+                ->view('emails.verify-email', ['name' => $notifiable->name, 'verificationCode' => $verificationCode]);
         });
     }
 
