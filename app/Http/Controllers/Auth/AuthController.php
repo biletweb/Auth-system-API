@@ -31,18 +31,16 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if ($request->validated()) {
-            if (auth()->attempt($request->only('email', 'password'))) {
-                return response()->json([
-                    'message' => 'You have successfully logged in.',
-                    'user' => auth()->user()->only('id', 'name', 'surname', 'email', 'email_verified_at', 'role', 'locale'),
-                    'access_token' => auth()->user()->createToken('authToken')->plainTextToken,
-                ]);
-            } else {
-                return response()->json([
-                    'error' => 'Invalid credentials.',
-                ]);
-            }
+        if (auth()->attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'You have successfully logged in.',
+                'user' => auth()->user()->only('id', 'name', 'surname', 'email', 'email_verified_at', 'role', 'locale'),
+                'access_token' => auth()->user()->createToken('authToken')->plainTextToken,
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'Invalid credentials.',
+            ]);
         }
     }
 
