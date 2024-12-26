@@ -71,4 +71,15 @@ class ProfileController extends Controller
             'message' => 'Account deleted successfully.',
         ]);
     }
+
+    public function changeLocale(Request $request)
+    {
+        $request->user()->update([
+            'locale' => $request->locale,
+        ]);
+
+        return response()->json([
+            'message' => 'Locale changed successfully.',
+        ]);
+    }
 }
