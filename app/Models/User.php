@@ -49,4 +49,19 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function getEmailVerifiedAtAttribute($value)
+    {
+        return $this->asDateTime($value)->format('d.m.Y H:i');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->asDateTime($value)->format('d.m.Y H:i');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->asDateTime($value)->format('d.m.Y H:i');
+    }
 }
