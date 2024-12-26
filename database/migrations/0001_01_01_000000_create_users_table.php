@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('security_code')->nullable();
             $table->string('password');
             $table->string('role')->default('user');
+            $table->string('locale')->default('uk');
             $table->rememberToken();
             $table->timestamps();
         });
