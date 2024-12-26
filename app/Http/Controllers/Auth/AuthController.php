@@ -71,4 +71,11 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'You have successfully verified your email.']);
     }
+
+    public function resendEmail(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return response()->json(['message' => 'Security code has been sent.']);
+    }
 }

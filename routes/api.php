@@ -9,6 +9,7 @@ Route::post('/profile/settings/change-password', [ProfileController::class, 'cha
 Route::post('/profile/settings/update-personal-info', [ProfileController::class, 'updatePersonalInfo'])->middleware('auth:sanctum');
 Route::post('/profile/settings/delete-account', [ProfileController::class, 'deleteAccount'])->middleware('auth:sanctum');
 Route::post('/profile/settings/confirm-email', [AuthController::class, 'confirmEmail'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.verify');
+Route::post('/profile/settings/resend-email', [AuthController::class, 'resendEmail'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
