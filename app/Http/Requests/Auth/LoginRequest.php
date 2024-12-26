@@ -35,6 +35,7 @@ class LoginRequest extends FormRequest
 
         if ($errors->has('email')) {
             $response = response()->json([
+                'field' => 'email',
                 'error' => $errors->first('email'),
             ], 422);
 
@@ -43,6 +44,7 @@ class LoginRequest extends FormRequest
 
         if ($errors->has('password')) {
             $response = response()->json([
+                'field' => 'password',
                 'error' => $errors->first('password'),
             ], 422);
 
