@@ -60,7 +60,7 @@ class AuthController extends Controller
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json(['warning' => 'You have already verified your email.']);
         }
-        if ($request->verificationCode !== $request->user()->verificationCode) {
+        if ($request->verification_code !== $request->user()->verification_code) {
             return response()->json(['error' => 'Invalid verification code.']);
         }
 
