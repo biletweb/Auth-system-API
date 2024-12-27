@@ -17,6 +17,7 @@ class SearchController extends Controller
         }
 
         $searchTerm = $request->input('search');
+        $searchTerm = trim($searchTerm); // Удаляем пробелы
 
         if ($searchTerm === 'Администратор') {
             $searchTerm = 'admin';
@@ -26,13 +27,35 @@ class SearchController extends Controller
             ]);
         }
 
+        $searchTerms = explode(' ', $searchTerm); // Разбиваем строку на массив по пробелам
+
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
-            ->where('name', 'like', '%'.$searchTerm.'%')
-            ->orWhere('surname', 'like', '%'.$searchTerm.'%')
-            ->orWhere('email', 'like', '%'.$searchTerm.'%')
-            ->orWhere('role', 'like', '%'.$searchTerm.'%')
+            ->when(count($searchTerms) > 1, function ($query) use ($searchTerms) {
+                // Если ввели два и более слов, выполняем поиск по имени и фамилии
+                $query->where(function ($q) use ($searchTerms) {
+                    $q->where('name', 'like', '%'.$searchTerms[0].'%')
+                        ->where('surname', 'like', '%'.$searchTerms[1].'%');
+                })->orWhere(function ($q) use ($searchTerms) {
+                    $q->where('name', 'like', '%'.$searchTerms[1].'%')
+                        ->where('surname', 'like', '%'.$searchTerms[0].'%');
+                });
+            }, function ($query) use ($searchTerm) {
+                // Если одно слово, ищем во всех полях
+                $query->where('name', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('surname', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('email', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('role', 'like', '%'.$searchTerm.'%');
+            })
             ->orderByDesc('id')
             ->get();
+
+        // $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
+        //     ->where('name', 'like', '%'.$searchTerm.'%')
+        //     ->orWhere('surname', 'like', '%'.$searchTerm.'%')
+        //     ->orWhere('email', 'like', '%'.$searchTerm.'%')
+        //     ->orWhere('role', 'like', '%'.$searchTerm.'%')
+        //     ->orderByDesc('id')
+        //     ->get();
 
         if (count($users) > 10) {
             return response()->json([
