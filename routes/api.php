@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Users\SearchController;
 use App\Http\Controllers\Admin\Users\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\ProfileController;
@@ -16,3 +17,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/admin/users', [UsersController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/admin/users/search', [SearchController::class, 'searchUsers'])->middleware('auth:sanctum');

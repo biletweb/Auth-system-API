@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class SearchController extends Controller
 {
-    public function index(Request $request)
+    public function searchUsers(Request $request)
     {
         if (auth()->user()->role !== 'admin') {
             return response()->json([
@@ -16,12 +16,12 @@ class UsersController extends Controller
             ]);
         }
 
-        $offset = $request->input('offset', 0);
-        $limit = $request->input('limit', 10);
+        $searchTerm = $request->input('search');
 
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
-            ->skip($offset)
-            ->take($limit)
+            ->where('name', 'like', '%'.$searchTerm.'%')
+            ->orWhere('surname', 'like', '%'.$searchTerm.'%')
+            ->orWhere('email', 'like', '%'.$searchTerm.'%')
             ->orderByDesc('id')
             ->get();
 
