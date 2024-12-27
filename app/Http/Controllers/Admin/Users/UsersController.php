@@ -9,6 +9,12 @@ class UsersController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->role !== 'admin') {
+            return response()->json([
+                'warning' => 'You do not have permission to view this page.',
+            ]);
+        }
+
         return response()->json([
             'users' => User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at')->get(),
         ]);
