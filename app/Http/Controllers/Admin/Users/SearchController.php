@@ -34,6 +34,12 @@ class SearchController extends Controller
             ->orderByDesc('id')
             ->get();
 
+        if (count($users) > 10) {
+            return response()->json([
+                'warning' => 'Too many users satisfy this request. Refine your search query.',
+            ]);
+        }
+
         return response()->json([
             'users' => $users,
         ]);
