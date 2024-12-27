@@ -62,11 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getCreatedAtAttribute($value)
     {
-        return $this->asDateTime($value)->format('d.m.Y H:i');
+        return $this->asDateTime($value)->timezone('Europe/Kiev')->format('d.m.Y H:i');
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return $this->asDateTime($value)->format('d.m.Y H:i');
+        return $this->asDateTime($value)->timezone('Europe/Kiev')->format('d.m.Y H:i');
     }
 }
