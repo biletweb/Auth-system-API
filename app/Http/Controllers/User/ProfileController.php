@@ -19,21 +19,19 @@ class ProfileController extends Controller
 
     public function changePassword(NewPasswordRequest $request)
     {
-        if ($request->validated()) {
-            if (password_verify($request->password, $request->user()->password)) {
-                return response()->json([
-                    'error' => 'New password cannot be the same as the current password.',
-                ]);
-            }
-
-            $request->user()->update([
-                'password' => bcrypt($request->password),
-            ]);
-
+        if (password_verify($request->password, $request->user()->password)) {
             return response()->json([
-                'message' => 'Password changed successfully.',
+                'error' => 'New password cannot be the same as the current password.',
             ]);
         }
+
+        $request->user()->update([
+            'password' => bcrypt($request->password),
+        ]);
+
+        return response()->json([
+            'message' => 'Password changed successfully.',
+        ]);
     }
 
     public function updatePersonalInfo(UpdatePersonalInfoRequest $request)
