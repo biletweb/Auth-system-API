@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->role !== 'admin') {
             return response()->json([
@@ -15,8 +16,17 @@ class UsersController extends Controller
             ]);
         }
 
+        $offset = $request->input('offset', 0);
+        $limit = $request->input('limit', 10);
+
+        $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
+            ->skip($offset)
+            ->take($limit)
+            ->orderByDesc('id')
+            ->get();
+
         return response()->json([
-            'users' => User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')->orderByDesc('id')->get(),
+            'users' => $users,
         ]);
     }
 }
