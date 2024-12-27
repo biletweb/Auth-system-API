@@ -21,7 +21,7 @@ class ProfileController extends Controller
     {
         if (password_verify($request->password, $request->user()->password)) {
             return response()->json([
-                'error' => 'New password cannot be the same as the current password.',
+                'warning' => 'No changes were made.',
             ]);
         }
 
