@@ -13,20 +13,18 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
-        if ($request->validated()) {
-            $user = User::create([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+        $user = User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
 
-            event(new Registered($user));
+        event(new Registered($user));
 
-            return response()->json([
-                'message' => 'Account has been created successfully! Please confirm your email. We have sent a security code to the address you provided.',
-            ]);
-        }
+        return response()->json([
+            'message' => 'Account has been created successfully! Please confirm your email. We have sent a security code to the address you provided.',
+        ]);
     }
 
     public function login(LoginRequest $request)

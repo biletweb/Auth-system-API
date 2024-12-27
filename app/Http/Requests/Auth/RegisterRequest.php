@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class RegisterRequest extends FormRequest
 {
@@ -27,5 +29,46 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'max:255', 'confirmed'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        if ($errors->has('name')) {
+            $response = response()->json([
+                'field' => 'name',
+                'error' => $errors->first('name'),
+            ], 422);
+
+            throw new ValidationException($validator, $response);
+        }
+
+        if ($errors->has('surname')) {
+            $response = response()->json([
+                'field' => 'surname',
+                'error' => $errors->first('surname'),
+            ], 422);
+
+            throw new ValidationException($validator, $response);
+        }
+
+        if ($errors->has('email')) {
+            $response = response()->json([
+                'field' => 'email',
+                'error' => $errors->first('email'),
+            ], 422);
+
+            throw new ValidationException($validator, $response);
+        }
+
+        if ($errors->has('password')) {
+            $response = response()->json([
+                'field' => 'password',
+                'error' => $errors->first('password'),
+            ], 422);
+
+            throw new ValidationException($validator, $response);
+        }
     }
 }
