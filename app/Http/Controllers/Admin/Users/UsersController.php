@@ -16,7 +16,7 @@ class UsersController extends Controller
         }
 
         return response()->json([
-            'users' => User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')->get(),
+            'users' => User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')->orderByDesc('id')->get(),
         ]);
     }
 }
