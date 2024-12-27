@@ -18,10 +18,19 @@ class SearchController extends Controller
 
         $searchTerm = $request->input('search');
 
+        if ($searchTerm === 'Администратор') {
+            $searchTerm = 'admin';
+        } else if ($searchTerm === 'Пользователь') {
+            return response()->json([
+                'warning' => 'Too many users satisfy this request. Refine your search query.',
+            ]);
+        }
+
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
-            ->where('name', 'like', '%'.$searchTerm.'%')
-            ->orWhere('surname', 'like', '%'.$searchTerm.'%')
-            ->orWhere('email', 'like', '%'.$searchTerm.'%')
+            ->where('name', 'like', '%' . $searchTerm . '%')
+            ->orWhere('surname', 'like', '%' . $searchTerm . '%')
+            ->orWhere('email', 'like', '%' . $searchTerm . '%')
+            ->orWhere('role', 'like', '%' . $searchTerm . '%')
             ->orderByDesc('id')
             ->get();
 
