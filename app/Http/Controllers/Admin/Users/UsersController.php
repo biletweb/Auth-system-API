@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Users\ChangeUserRoleRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class UsersController extends Controller
         ]);
     }
 
-    public function changeRole(Request $request)
+    public function changeRole(ChangeUserRoleRequest $request)
     {
         if (auth()->user()->role !== 'admin') {
             return response()->json([
@@ -39,12 +40,17 @@ class UsersController extends Controller
         }
 
         $user = User::find($request->input('id'));
-        $user->role === 'admin' ? $user->role = 'user' : $user->role = 'admin';
+
+        if (! $user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $user->role = $user->role === 'admin' ? 'user' : 'admin';
         $user->save();
 
         return response()->json([
             'message' => 'User role changed successfully.',
-            'user' => $user,
+            'user' => $user->only(['id', 'name', 'surname', 'email', 'email_verified_at', 'role', 'locale']),
         ]);
     }
 }
