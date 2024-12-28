@@ -18,4 +18,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/admin/users', [UsersController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/admin/users/search', [SearchController::class, 'searchUsers'])->middleware('auth:sanctum');
+Route::get('/admin/users/filter', [SearchController::class, 'filterUsers'])->middleware('auth:sanctum');
 Route::post('/admin/users/change/role', [UsersController::class, 'changeRole'])->middleware(['auth:sanctum', 'throttle:6,1']);
