@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\FilterUsersRequest;
+use App\Http\Requests\Admin\Users\SearchUsersRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function searchUsers(Request $request)
+    public function searchUsers(SearchUsersRequest $request)
     {
         if (auth()->user()->role !== 'admin') {
             return response()->json([
