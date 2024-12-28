@@ -19,13 +19,13 @@ class SearchController extends Controller
         $searchTerm = $request->input('search');
         $searchTerm = trim($searchTerm); // Удаляем пробелы
 
-        if ($searchTerm === 'Администратор') {
+        if ($searchTerm === 'Administrator' || $searchTerm === 'Администратор' || $searchTerm === 'Адміністратор') {
             $searchTerm = 'admin';
-        } elseif ($searchTerm === 'Пользователь') {
-            return response()->json([
-                'warning' => 'Too many users satisfy this request. Refine your search query.',
-            ]);
         }
+
+        if ($searchTerm === 'User' || $searchTerm === 'Пользователь' || $searchTerm === 'Користувач') {
+            $searchTerm = 'user';
+        } 
 
         $searchTerms = explode(' ', $searchTerm); // Разбиваем строку на массив по пробелам
 
