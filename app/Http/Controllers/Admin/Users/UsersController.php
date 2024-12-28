@@ -29,4 +29,22 @@ class UsersController extends Controller
             'users' => $users,
         ]);
     }
+
+    public function changeRole(Request $request)
+    {
+        if (auth()->user()->role !== 'admin') {
+            return response()->json([
+                'warning' => 'You do not have permission to view this page.',
+            ]);
+        }
+
+        $user = User::find($request->input('id'));
+        $user->role === 'admin' ? $user->role = 'user' : $user->role = 'admin';
+        $user->save();
+
+        return response()->json([
+            'message' => 'User role changed successfully.',
+            'user' => $user,
+        ]);
+    }
 }
