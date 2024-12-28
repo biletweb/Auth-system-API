@@ -25,7 +25,7 @@ class SearchController extends Controller
 
         if ($searchTerm === 'User' || $searchTerm === 'Пользователь' || $searchTerm === 'Користувач') {
             $searchTerm = 'user';
-        } 
+        }
 
         $searchTerms = explode(' ', $searchTerm); // Разбиваем строку на массив по пробелам
 
@@ -48,14 +48,6 @@ class SearchController extends Controller
             })
             ->orderByDesc('id')
             ->get();
-
-        // $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
-        //     ->where('name', 'like', '%'.$searchTerm.'%')
-        //     ->orWhere('surname', 'like', '%'.$searchTerm.'%')
-        //     ->orWhere('email', 'like', '%'.$searchTerm.'%')
-        //     ->orWhere('role', 'like', '%'.$searchTerm.'%')
-        //     ->orderByDesc('id')
-        //     ->get();
 
         if (count($users) > 10) {
             return response()->json([
