@@ -19,14 +19,6 @@ class SearchController extends Controller
         $searchTerm = $request->input('search');
         $searchTerm = trim($searchTerm); // Удаляем пробелы
 
-        if ($searchTerm === 'Administrator' || $searchTerm === 'Администратор' || $searchTerm === 'Адміністратор') {
-            $searchTerm = 'admin';
-        }
-
-        if ($searchTerm === 'User' || $searchTerm === 'Пользователь' || $searchTerm === 'Користувач') {
-            $searchTerm = 'user';
-        }
-
         $searchTerms = explode(' ', $searchTerm); // Разбиваем строку на массив по пробелам
 
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
@@ -43,8 +35,7 @@ class SearchController extends Controller
                 // Если одно слово, ищем во всех полях
                 $query->where('name', 'like', '%'.$searchTerm.'%')
                     ->orWhere('surname', 'like', '%'.$searchTerm.'%')
-                    ->orWhere('email', 'like', '%'.$searchTerm.'%')
-                    ->orWhere('role', 'like', '%'.$searchTerm.'%');
+                    ->orWhere('email', 'like', '%'.$searchTerm.'%');
             })
             ->orderByDesc('id')
             ->get();
