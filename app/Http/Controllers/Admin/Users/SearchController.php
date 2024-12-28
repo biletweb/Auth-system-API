@@ -19,7 +19,6 @@ class SearchController extends Controller
 
         $searchTerm = $request->input('search');
         $searchTerm = trim($searchTerm); // Удаляем пробелы
-
         $searchTerms = explode(' ', $searchTerm); // Разбиваем строку на массив по пробелам
 
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
