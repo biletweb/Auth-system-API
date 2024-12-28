@@ -35,7 +35,8 @@ class SearchController extends Controller
                 // Если одно слово, ищем во всех полях
                 $query->where('name', 'like', '%'.$searchTerm.'%')
                     ->orWhere('surname', 'like', '%'.$searchTerm.'%')
-                    ->orWhere('email', 'like', '%'.$searchTerm.'%');
+                    ->orWhere('email', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('role', 'like', '%'.$searchTerm.'%');
             })
             ->orderByDesc('id')
             ->get();
