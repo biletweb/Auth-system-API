@@ -24,7 +24,7 @@ class FilterUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'filter' => ['required', 'exists:users,role'],
+            'filter' => ['required', 'in:admin'],
         ];
     }
 
