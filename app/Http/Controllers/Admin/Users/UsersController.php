@@ -50,7 +50,7 @@ class UsersController extends Controller
 
         return response()->json([
             'message' => 'User role changed successfully.',
-            'user' => $user->only(['id', 'name', 'surname', 'email', 'email_verified_at', 'role', 'locale']),
+            'user' => $user->only(['id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at']),
         ]);
     }
 }
