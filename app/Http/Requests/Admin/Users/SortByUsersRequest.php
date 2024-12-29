@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class FilterUsersRequest extends FormRequest
+class SortByUsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class FilterUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'filter' => ['required', 'in:admin'],
+            'filter' => ['required', 'in:admin,user'],
         ];
     }
 
