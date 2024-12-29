@@ -60,9 +60,13 @@ class SearchController extends Controller
         }
 
         $searchTerm = $request->input('sort_by');
+        $offset = $request->input('sortByOffset', 0);
+        $limit = $request->input('sortByLimit', 10);
 
         if ($searchTerm === 'all') {
             $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
+                ->skip($offset)
+                ->take($limit)
                 ->orderByDesc('id')
                 ->get();
 
@@ -73,6 +77,8 @@ class SearchController extends Controller
 
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
             ->where('role', $searchTerm)
+            ->skip($offset)
+            ->take($limit)
             ->orderByDesc('id')
             ->get();
 
