@@ -61,6 +61,10 @@ class SearchController extends Controller
 
         $searchTerm = $request->input('sort_by');
 
+        if ($searchTerm === 'all') {
+            //
+        }
+
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
             ->where('role', $searchTerm)
             ->orderByDesc('id')
