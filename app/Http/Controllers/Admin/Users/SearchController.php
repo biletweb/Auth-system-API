@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\SearchUsersRequest;
-use App\Http\Requests\Admin\Users\SortByUsersRequest;
+use App\Http\Requests\Admin\Users\SearchRequest;
+use App\Http\Requests\Admin\Users\SortByRequest;
 use App\Models\User;
 
 class SearchController extends Controller
 {
-    public function userSearch(SearchUsersRequest $request)
+    public function userSearch(SearchRequest $request)
     {
         $searchTerm = $request->input('search');
         $searchTerm = trim($searchTerm); // Удаляем пробелы
@@ -40,7 +40,7 @@ class SearchController extends Controller
         ]);
     }
 
-    public function sortBy(SortByUsersRequest $request)
+    public function sortBy(SortByRequest $request)
     {
         $searchTerm = $request->input('sort_by');
         $offset = $request->input('sortByOffset', 0);

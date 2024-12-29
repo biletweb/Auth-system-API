@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\ChangeUserRoleRequest;
+use App\Http\Requests\Admin\Users\ChangeRoleRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -25,7 +25,7 @@ class UsersController extends Controller
         ]);
     }
 
-    public function changeRole(ChangeUserRoleRequest $request)
+    public function changeRole(ChangeRoleRequest $request)
     {
         $user = User::find($request->input('id'));
 

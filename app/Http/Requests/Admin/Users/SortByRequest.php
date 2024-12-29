@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class SearchUsersRequest extends FormRequest
+class SortByRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class SearchUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => ['required', 'string', 'min:3', 'max:255'],
+            'sort_by' => ['required', 'in:admin,user,all'],
         ];
     }
 
@@ -32,10 +32,10 @@ class SearchUsersRequest extends FormRequest
     {
         $errors = $validator->errors();
 
-        if ($errors->has('search')) {
+        if ($errors->has('sort_by')) {
             $response = response()->json([
-                'field' => 'search',
-                'error' => $errors->first('search'),
+                'field' => 'sort_by',
+                'error' => $errors->first('sort_by'),
             ], 422);
 
             throw new ValidationException($validator, $response);
