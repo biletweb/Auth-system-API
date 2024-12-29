@@ -24,7 +24,7 @@ class SortByUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'filter' => ['required', 'in:admin,user'],
+            'sort_by' => ['required', 'in:admin,user'],
         ];
     }
 
@@ -32,10 +32,10 @@ class SortByUsersRequest extends FormRequest
     {
         $errors = $validator->errors();
 
-        if ($errors->has('filter')) {
+        if ($errors->has('sort_by')) {
             $response = response()->json([
-                'field' => 'filter',
-                'error' => $errors->first('filter'),
+                'field' => 'sort_by',
+                'error' => $errors->first('sort_by'),
             ], 422);
 
             throw new ValidationException($validator, $response);

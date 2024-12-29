@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Users\FilterUsersRequest;
 use App\Http\Requests\Admin\Users\SearchUsersRequest;
+use App\Http\Requests\Admin\Users\SortByUsersRequest;
 use App\Models\User;
 
 class SearchController extends Controller
@@ -51,7 +51,7 @@ class SearchController extends Controller
         ]);
     }
 
-    public function filterUsers(FilterUsersRequest $request)
+    public function sortBy(SortByUsersRequest $request)
     {
         if (auth()->user()->role !== 'admin') {
             return response()->json([
@@ -59,7 +59,7 @@ class SearchController extends Controller
             ]);
         }
 
-        $searchTerm = $request->input('filter');
+        $searchTerm = $request->input('sort_by');
 
         $users = User::select('id', 'name', 'surname', 'email', 'role', 'locale', 'created_at', 'email_verified_at')
             ->where('role', $searchTerm)
