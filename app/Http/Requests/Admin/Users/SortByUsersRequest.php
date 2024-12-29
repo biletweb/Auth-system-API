@@ -24,7 +24,7 @@ class SortByUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sort_by' => ['required', 'in:all,admin,user'],
+            'sort_by' => ['required', 'in:admin,user,all'],
         ];
     }
 
