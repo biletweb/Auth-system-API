@@ -16,7 +16,7 @@ Route::post('/profile/settings/change-locale', [ProfileController::class, 'chang
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/admin/users', [UsersController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/admin/users/search', [SearchController::class, 'userSearch'])->middleware('auth:sanctum');
-Route::get('/admin/users/sort-by', [SearchController::class, 'sortBy'])->middleware('auth:sanctum');
-Route::post('/admin/users/change/role', [UsersController::class, 'changeRole'])->middleware(['auth:sanctum', 'throttle:6,1']);
+Route::get('/admin/users', [UsersController::class, 'index'])->middleware(['auth:sanctum', 'admin']);
+Route::get('/admin/users/search', [SearchController::class, 'userSearch'])->middleware(['auth:sanctum', 'admin']);
+Route::get('/admin/users/sort-by', [SearchController::class, 'sortBy'])->middleware(['auth:sanctum', 'admin']);
+Route::post('/admin/users/change/role', [UsersController::class, 'changeRole'])->middleware(['auth:sanctum', 'admin', 'throttle:6,1']);

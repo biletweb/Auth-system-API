@@ -11,12 +11,6 @@ class SearchController extends Controller
 {
     public function userSearch(SearchUsersRequest $request)
     {
-        if (auth()->user()->role !== 'admin') {
-            return response()->json([
-                'warning' => 'You do not have permission to view this page.',
-            ]);
-        }
-
         $searchTerm = $request->input('search');
         $searchTerm = trim($searchTerm); // Удаляем пробелы
         $searchTerms = explode(' ', $searchTerm); // Разбиваем строку на массив по пробелам
@@ -48,12 +42,6 @@ class SearchController extends Controller
 
     public function sortBy(SortByUsersRequest $request)
     {
-        if (auth()->user()->role !== 'admin') {
-            return response()->json([
-                'warning' => 'You do not have permission to view this page.',
-            ]);
-        }
-
         $searchTerm = $request->input('sort_by');
         $offset = $request->input('sortByOffset', 0);
         $limit = $request->input('sortByLimit', 10);

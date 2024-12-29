@@ -11,12 +11,6 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        if (auth()->user()->role !== 'admin') {
-            return response()->json([
-                'warning' => 'You do not have permission to view this page.',
-            ]);
-        }
-
         $offset = $request->input('offset', 0);
         $limit = $request->input('limit', 10);
 
@@ -33,12 +27,6 @@ class UsersController extends Controller
 
     public function changeRole(ChangeUserRoleRequest $request)
     {
-        if (auth()->user()->role !== 'admin') {
-            return response()->json([
-                'warning' => 'You do not have permission to view this page.',
-            ]);
-        }
-
         $user = User::find($request->input('id'));
 
         if (! $user) {
