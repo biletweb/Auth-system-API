@@ -9,7 +9,7 @@ use App\Models\User;
 
 class SearchController extends Controller
 {
-    public function searchUsers(SearchUsersRequest $request)
+    public function userSearch(SearchUsersRequest $request)
     {
         if (auth()->user()->role !== 'admin') {
             return response()->json([
@@ -37,14 +37,9 @@ class SearchController extends Controller
                     ->orWhere('surname', 'like', '%'.$searchTerm.'%')
                     ->orWhere('email', 'like', '%'.$searchTerm.'%');
             })
+            ->limit(10)
             ->orderByDesc('id')
             ->get();
-
-        if (count($users) > 10) {
-            return response()->json([
-                'warning' => 'Too many users satisfy this request. Refine your search query.',
-            ]);
-        }
 
         return response()->json([
             'users' => $users,
