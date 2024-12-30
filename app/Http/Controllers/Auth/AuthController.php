@@ -84,12 +84,14 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         $newPassword = random_int(100000, 999999);
+        $user->password = bcrypt($newPassword);
+        $user->save();
 
-        Mail::send('emails.forgot-password', ['user' => $user, 'newPassword' => $newPassword], function ($message) use ($user) {
+        Mail::send('emails.forgot-password', ['name' => $user->name, 'newPassword' => $newPassword], function ($message) use ($user) {
             $message->to($user->email);
             $message->subject('Reset password');
         });
 
-        return response()->json(['message' => 'A new password has been sent to the email address you provided']);
+        return response()->json(['message' => 'A new password has been sent to the email address you provided.']);
     }
 }
