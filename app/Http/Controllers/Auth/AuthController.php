@@ -100,7 +100,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['error' => ['message' => 'Failed to send email with new password, try again later.']]);
+            return response()->json(['error' => 'Failed to send email with new password, try again later.']);
         }
     }
 }
