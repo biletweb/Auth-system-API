@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
@@ -81,16 +82,25 @@ class AuthController extends Controller
 
     public function forgotPassword(ForgotPasswordRequest $request)
     {
-        $newPassword = random_int(100000, 999999);
-        $user = User::where('email', $request->email)->first();
-        $user->password = bcrypt($newPassword);
-        $user->save();
+        try {
+            DB::beginTransaction();
+            $newPassword = random_int(100000, 999999);
+            $user = User::where('email', $request->email)->first();
+            $user->password = bcrypt($newPassword);
+            $user->save();
 
-        Mail::send('emails.forgot-password', ['name' => $user->name, 'newPassword' => $newPassword], function ($message) use ($user) {
-            $message->to($user->email);
-            $message->subject('Reset password');
-        });
+            Mail::send('emails.forgot-password', ['name' => $user->name, 'newPassword' => $newPassword], function ($message) use ($user) {
+                $message->to($user->email);
+                $message->subject('Reset password');
+            });
 
-        return response()->json(['message' => 'A new password has been sent to the email address you provided.']);
+            DB::commit();
+
+            return response()->json(['message' => 'A new password has been sent to the email address you provided.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => ['message' => 'Failed to send email with new password, try again later.']]);
+        }
     }
 }
