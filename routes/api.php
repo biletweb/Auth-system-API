@@ -15,6 +15,7 @@ Route::post('/profile/settings/resend-email', [AuthController::class, 'resendEma
 Route::post('/profile/settings/change-locale', [ProfileController::class, 'changeLocale'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('throttle:6,1');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/admin/users', [UsersController::class, 'index'])->middleware(['auth:sanctum', 'admin']);
 Route::get('/admin/users/search', [SearchController::class, 'userSearch'])->middleware(['auth:sanctum', 'admin']);

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -75,5 +77,19 @@ class AuthController extends Controller
         $request->user()->sendEmailVerificationNotification();
 
         return response()->json(['message' => 'Verification code has been sent.']);
+    }
+
+    public function forgotPassword(ForgotPasswordRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        $newPassword = random_int(100000, 999999);
+
+        Mail::send('emails.forgot-password', ['user' => $user, 'newPassword' => $newPassword], function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('Reset password');
+        });
+
+        return response()->json(['message' => 'A new password has been sent to the email address you provided']);
     }
 }
