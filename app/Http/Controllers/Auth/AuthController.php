@@ -81,9 +81,8 @@ class AuthController extends Controller
 
     public function forgotPassword(ForgotPasswordRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
-
         $newPassword = random_int(100000, 999999);
+        $user = User::where('email', $request->email)->first();
         $user->password = bcrypt($newPassword);
         $user->save();
 
