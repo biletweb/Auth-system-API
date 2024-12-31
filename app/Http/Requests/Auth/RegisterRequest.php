@@ -39,7 +39,7 @@ class RegisterRequest extends FormRequest
             $response = response()->json([
                 'field' => 'name',
                 'error' => $errors->first('name'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
@@ -48,7 +48,7 @@ class RegisterRequest extends FormRequest
             $response = response()->json([
                 'field' => 'surname',
                 'error' => $errors->first('surname'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
@@ -57,7 +57,7 @@ class RegisterRequest extends FormRequest
             $response = response()->json([
                 'field' => 'email',
                 'error' => $errors->first('email'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
@@ -66,7 +66,7 @@ class RegisterRequest extends FormRequest
             $response = response()->json([
                 'field' => 'password',
                 'error' => $errors->first('password'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }

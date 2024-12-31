@@ -52,7 +52,7 @@ class AuthController extends Controller
             return response()->json([
                 'field' => 'email, password',
                 'error' => 'Invalid credentials.',
-            ], 422);
+            ]);
         }
     }
 

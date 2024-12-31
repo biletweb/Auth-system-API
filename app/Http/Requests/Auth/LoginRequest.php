@@ -37,7 +37,7 @@ class LoginRequest extends FormRequest
             $response = response()->json([
                 'field' => 'email',
                 'error' => $errors->first('email'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
@@ -46,7 +46,7 @@ class LoginRequest extends FormRequest
             $response = response()->json([
                 'field' => 'password',
                 'error' => $errors->first('password'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
