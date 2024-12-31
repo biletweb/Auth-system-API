@@ -28,11 +28,6 @@ class UsersController extends Controller
     public function changeRole(ChangeRoleRequest $request)
     {
         $user = User::find($request->input('id'));
-
-        if (! $user) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-
         $user->role = $user->role === 'admin' ? 'user' : 'admin';
         $user->save();
 
