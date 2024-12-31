@@ -37,7 +37,7 @@ class UpdatePersonalInfoRequest extends FormRequest
             $response = response()->json([
                 'field' => 'name',
                 'error' => $errors->first('name'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
@@ -46,7 +46,7 @@ class UpdatePersonalInfoRequest extends FormRequest
             $response = response()->json([
                 'field' => 'surname',
                 'error' => $errors->first('surname'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
