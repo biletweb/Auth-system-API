@@ -107,7 +107,7 @@ class AuthController extends Controller
 
             Mail::send('emails.forgot-password', ['name' => $user->name, 'newPassword' => $newPassword], function ($message) use ($user) {
                 $message->to($user->email);
-                $message->subject('Reset password');
+                $message->subject('Забули пароль?');
             });
 
             DB::commit();

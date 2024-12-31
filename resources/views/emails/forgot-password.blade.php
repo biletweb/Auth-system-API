@@ -1,4 +1,4 @@
 <div>
-    <p>Hi {{ $name }},</p>
-    <p>Your new password: {{ $newPassword }}</p>
+    <p>Привіт {{ $name }},</p>
+    <p>Ваш новий пароль: {{ $newPassword }}</p>
 </div>

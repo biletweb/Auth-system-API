@@ -1,4 +1,4 @@
 <div>
-    <p>Hi {{ $name }},</p>
-    <p>Thanks for registering with us. Verification code: {{ $verificationCode }}</p>
+    <p>Привіт {{ $name }},</p>
+    <p>Дякуємо за реєстрацію на нашому сайті. Код підтвердження: {{ $verificationCode }}</p>
 </div>
