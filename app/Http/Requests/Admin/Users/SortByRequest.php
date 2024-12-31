@@ -36,7 +36,7 @@ class SortByRequest extends FormRequest
             $response = response()->json([
                 'field' => 'sort_by',
                 'error' => $errors->first('sort_by'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
