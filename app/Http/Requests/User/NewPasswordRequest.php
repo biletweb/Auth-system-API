@@ -36,7 +36,7 @@ class NewPasswordRequest extends FormRequest
             $response = response()->json([
                 'field' => 'password',
                 'error' => $errors->first('password'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
