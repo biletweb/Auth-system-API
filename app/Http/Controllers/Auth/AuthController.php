@@ -16,18 +16,28 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        try {
+            DB::beginTransaction();
 
-        event(new Registered($user));
+            $user = User::create([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
 
-        return response()->json([
-            'message' => 'Account has been created successfully! Please confirm your email. We have sent a verification code to the address you provided.',
-        ]);
+            event(new Registered($user));
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Account has been created successfully! Please confirm your email. We have sent a verification code to the address you provided.',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to create account, try again later.']);
+        }
     }
 
     public function login(LoginRequest $request)
@@ -84,6 +94,7 @@ class AuthController extends Controller
     {
         try {
             DB::beginTransaction();
+
             $newPassword = random_int(100000, 999999);
             $user = User::where('email', $request->email)->first();
             $user->password = bcrypt($newPassword);
