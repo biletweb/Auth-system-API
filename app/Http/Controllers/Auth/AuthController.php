@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ConfirmEmailRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -65,7 +66,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function confirmEmail(Request $request)
+    public function confirmEmail(ConfirmEmailRequest $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json(['warning' => 'You have already verified your email.']);
