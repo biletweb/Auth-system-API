@@ -24,7 +24,7 @@ class ConfirmEmailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'verification_code' => ['required', 'string', 'min:6', 'max:6'],
+            'verification_code' => ['required', 'digits:6'],
         ];
     }
 
