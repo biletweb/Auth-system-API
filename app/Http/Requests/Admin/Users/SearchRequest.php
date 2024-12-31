@@ -36,7 +36,7 @@ class SearchRequest extends FormRequest
             $response = response()->json([
                 'field' => 'search',
                 'error' => $errors->first('search'),
-            ], 422);
+            ]);
 
             throw new ValidationException($validator, $response);
         }
