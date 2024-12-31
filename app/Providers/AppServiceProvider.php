@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
             $user->save();
 
             return (new MailMessage)
-                ->subject('Verify Email Address')
+                ->subject('Verify email address')
                 ->view('emails.verify-email', ['name' => $notifiable->name, 'verificationCode' => $verificationCode]);
         });
     }
