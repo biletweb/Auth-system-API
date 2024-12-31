@@ -86,9 +86,13 @@ class AuthController extends Controller
 
     public function resendEmail(Request $request)
     {
-        $request->user()->sendEmailVerificationNotification();
+        try {
+            $request->user()->sendEmailVerificationNotification();
 
-        return response()->json(['message' => 'Verification code has been sent.']);
+            return response()->json(['message' => 'Verification code has been sent.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to send verification code, try again later.']);
+        }
     }
 
     public function forgotPassword(ForgotPasswordRequest $request)
