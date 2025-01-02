@@ -5,8 +5,8 @@ The project is a web application with user registration and authentication funct
 To configure the project, specify the database communication settings in the `.env` configuration file.
 
 During installation, an administrator user will be created. Login details:  
-**Email**: test@example.com  
-**Password**: password
+**Email**: `test@example.com`  
+**Password**: `password`
 
 ## Project Setup
 
