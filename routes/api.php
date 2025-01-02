@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Users\SearchController;
 use App\Http\Controllers\Admin\Users\UsersController;
 use App\Http\Controllers\Auth\AuthController;
@@ -21,3 +22,4 @@ Route::get('/admin/users', [UsersController::class, 'index'])->middleware(['auth
 Route::get('/admin/users/search', [SearchController::class, 'userSearch'])->middleware(['auth:sanctum', 'admin']);
 Route::get('/admin/users/sort-by', [SearchController::class, 'sortBy'])->middleware(['auth:sanctum', 'admin']);
 Route::post('/admin/users/change/role', [UsersController::class, 'changeRole'])->middleware(['auth:sanctum', 'admin']);
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->middleware(['auth:sanctum', 'admin']);
